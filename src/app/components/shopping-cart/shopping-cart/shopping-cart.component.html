@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h3>
+      <i class="material-icons">shopping_cart</i>
+      Your Shopping Cart
+    </h3>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="small-12 columns">
+    <h5>
+      Sub Total ({{ itemCount }} items):
+      <span class="text--red text--bold js-cart-total">
+        {{ (cart | async)!.itemsTotal | currency: 'CAD':true }}</span>
+    </h5>
+  </div>
+</div>
+<div class="row" *ngFor="let product of cartItems">
+  <mat-card class="product-card" *ngIf="product">
+    <img
+      class="product-card-image"
+      mat-card-image
+      src="{{ product.pictureUrl }}"
+    />
+    <mat-card-content class="product-description">
+      <a
+        [title]="product.name + ' details'"
+        [routerLink]="['/products', product.id]"
+      >
+        {{ product.name.substring(0, 100) }}...
+      </a>
+    </mat-card-content>
+    <mat-card-content class="product-rate">
+      {{ product.rate }}
+    </mat-card-content>
+    <mat-card-content class="product-price">
+      ${{ product.price }}
+    </mat-card-content>
+  </mat-card>
+</div>
+<br />
+<div class="row">
+  <div class="small-12 columns">
+    <button
+      type="button"
+      class="success button large expanded"
+      [attr.disabled]="itemCount === 0 ? true : null"
+      routerLink="/checkout"
+    >
+      Proceed To Checkout
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+    <button
+      type="button"
+      class="secondary button small expanded js-btn-empty-cart"
+      (click)="emptyCart()"
+      [attr.disabled]="itemCount === 0 ? true : null"
+    >
+      Empty shopping cart
+    </button>
+  </div>
+</div>
